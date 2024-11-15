@@ -72,7 +72,7 @@ local lamp = {
     },
     max_health = 150,
     minable = {
-        mining_time = 2.0,
+        mining_time = 4.0,
         result = DLL.name,  -- deadlock-large-lamp
     },
     mined_sound = {
@@ -137,7 +137,7 @@ local lamp = {
     name = DLL.copper_name,  -- deadlock-copper-lamp
     type = "assembling-machine",
     minable = {
-        mining_time = 2.0,
+        mining_time = 4.0,
         result = DLL.copper_name,  -- deadlock-copper-lamp
     },
     icon = string.format("%s/copper-lamp.png", DLL.icon_path),
@@ -234,7 +234,7 @@ lamp = table.deepcopy(data.raw.lamp[DLL.name])
 
 lamp.name = DLL.floor_name  -- deadlock-floor-lamp
 lamp.minable = {
-    mining_time = 2.0,
+    mining_time = 4.0,
     result = DLL.floor_name  -- deadlock-floor-lamp
 }
 lamp.icon = string.format("%s/floor-lamp.png", DLL.icon_path)
@@ -287,7 +287,7 @@ local lamp = {
     name = DLL.electric_copper_name,  -- Use the correct unique name for the electric copper lamp
     type = "lamp",  -- Type is lamp to behave like a regular lamp
     minable = {
-        mining_time = 2.0,
+        mining_time = 4.0,
         result = DLL.electric_copper_name  -- Adjust this to the appropriate item name
     },
     circuit_connector = circuit_connector_definitions.create_vector(
