@@ -1,0 +1,60 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.9
+Date: 18. 11. 2024
+  Changes:
+    - Rewrote control.lua due to outdated Factorio 1.1 code in the config refresh (bug report by m444v).
+    - Renamed the file structure of the mod for clarity: Deadlocklargerlamp_goaupdate renamed to Larger-lamps 2.0.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.8
+Date: 15. 11. 2024
+  Bugfixes:
+    - Fixed player collision for the Large Lamp and Copper Lamp (fix by NullHarp).
+    - Corrected missing recipe localization key for deadlock-copper-lamp-burning (fix by NullHarp).
+---------------------------------------------------------------------------------------------------
+Version: 0.0.7
+Date: 14. 11. 2024
+  Bugfixes:
+    - Adjusted circuit connection positioning for the Large Lamp (fix by NullHarp).
+---------------------------------------------------------------------------------------------------
+Version: 0.0.6
+Date: 14. 11. 2024
+  Changes:
+    - Electric Copper Lamp can now be picked up after placement.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 14. 11. 2024
+  Features:
+    - Updated mod to version 0.0.5.
+    - Added Electric Copper Lamp: A new electric-powered version of the copper lamp, crafted using advanced circuits, copper cables, and iron plates.
+    - Fixed missing English localization entries for the Electric Copper Lamp.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+Date: 13. 11. 2024
+  Changes:
+    - Updated mod to version 0.0.4 to fix the changelog display issue in-game (due to previous formatting problems).
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 13. 11. 2024
+  Bugfixes:
+    - Fixed the invisible copper lamp issue (special thanks to ChocoMaxXx for reporting this).
+  Known Issues:
+    - Display glitches may occur if the lamp interface is opened while it is off.
+    - Occasional flickering when using specific light combinations.
+  Notes:
+    - Acknowledged the menu visual glitch, which is not planned for fixing at this time.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 13. 11. 2024
+  Changes:
+    - Updated mod for Factorio 2.0 compatibility.
+    - Corrected item subgroup placement under 'logistics'.
+    - Adjusted icons and item properties to meet Factorio 2.0 standards.
+    - Fixed various item-related issues and updated item definitions.
+    - Reorganized the mod structure for improved compatibility and performance.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 13. 11. 2024
+  Major Features:
+    - Initial release for Factorio 2.0 compatibility.
+    - Special thanks to Deadlock for the original inspiration for this mod.
+---------------------------------------------------------------------------------------------------

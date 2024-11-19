@@ -1,0 +1,18 @@
+local DLL = require("prototypes.globals")
+
+data:extend({
+    {
+        name = DLL.copper_name,
+        type = "recipe",
+        enabled = true,
+        ingredients = {
+            { type = "item", name = "copper-plate", amount = 6 },
+        },
+        results = {
+            { type = "item", name = DLL.copper_name, amount = 1 }
+        },
+        subgroup = "circuit-network",  -- Copper lamp under circuit-network
+        order = "a[lamp]-b[copper-lamp]",  -- Place after large lamp
+        category = "crafting"  -- Category for crafting
+    }
+})
