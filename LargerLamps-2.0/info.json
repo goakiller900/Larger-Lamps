@@ -6,9 +6,7 @@
 	"contact": "",
 	"homepage": "",
 	"dependencies": [
-		"base >= 2.0",
-		"!AfraidOfTheDark",
-		"(?)Dectorio"
+		"base >= 2.0"
 	],
 	"description": "2x2 lamps that cast a wide, soft glow: an electric lamp that is signal compatible, a copper lamp that burns solid fuel, and a floor lamp panel that can be walked over.",
 	"factorio_version": "2.0"
