@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+Date: 08-11-2025
+  Bugfixes:
+    - Fixed a bug where Floor Lamp had collision with the player when it should not have.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 01-12-2024
   Bugfixes:
@@ -77,4 +82,3 @@ Date: 13-11-2024
   Major Features:
     - Initial release for Factorio 2.0 compatibility.
     - Special thanks to Deadlock for inspiring the original mod.
----------------------------------------------------------------------------------------------------
