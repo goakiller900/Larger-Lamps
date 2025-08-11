@@ -3,7 +3,7 @@ local DLL = require("prototypes.globals")
 local function config_refresh(event)
     if event.mod_changes["DeadlockLargerLamp"] then
         for _, force in pairs(game.forces) do
-            local technology = game.technology_prototypes[DLL.technology]
+            local technology = game.technology_prototypes["lamp"]
             local recipe = game.recipe_prototypes[DLL.name]
             local floor_recipe = game.recipe_prototypes[DLL.floor_name]
             local electric_copper_recipe = game.recipe_prototypes[DLL.electric_copper_name]
@@ -13,7 +13,7 @@ local function config_refresh(event)
                 -- Check if the technology is enabled
                 if technology.enabled then
                     -- Enable the recipes if technology is researched and visible
-                    if force.technologies[DLL.technology].researched then
+                    if force.technologies["lamp"].researched then
                         force.recipes[DLL.name].enabled = true
                         force.recipes[DLL.floor_name].enabled = true
                         log("Enabled recipes for " .. DLL.name .. " and " .. DLL.floor_name)
@@ -23,7 +23,7 @@ local function config_refresh(event)
                         log("Disabled recipes for " .. DLL.name .. " and " .. DLL.floor_name)
                     end
                 else
-                    log("Technology " .. DLL.technology .. " is disabled")
+                    log("Technology 'lamp' is disabled")
                 end
 
                 -- Check if prerequisites are researched before enabling recipes
@@ -51,7 +51,7 @@ local function config_refresh(event)
             -- Enable Electric Copper Lamp Recipe when technology is researched
             if electric_copper_recipe then
                 -- Check if the technology has been researched and if it is allowed
-                if force.technologies[DLL.technology].researched then
+                if force.technologies["lamp"].researched then
                     force.recipes[DLL.electric_copper_name].enabled = true
                     log("Enabled recipe for " .. DLL.electric_copper_name)
                 else

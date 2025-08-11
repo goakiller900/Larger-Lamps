@@ -6,8 +6,7 @@ local DLL = {
     icon_path = "__LargerLamps-2_0__/graphics/icons",
     entity_path = "__LargerLamps-2_0__/graphics/entities",
     glow_colour = { r = 1.0, g = 1.0, b = 0.75 },
-    tint_colour = { r = 1.0, g = 1.0, b = 0.95 },
-    technology = "lamp",
+    tint_colour = { r = 1.0, g = 1.0, b = 0.95 }
 }
 
 return DLL
