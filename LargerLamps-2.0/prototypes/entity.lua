@@ -1,13 +1,6 @@
 local DLL = require("prototypes.globals")
 local DLLFUNC = require("prototypes.functions")
 
--- electric large lamp
-
-local circuits = circuit_connector_definitions.create_vector(
-    universal_connector_template,
-    {{ variation = 26, main_offset = util.by_pixel(0, 10), shadow_offset = util.by_pixel(0, 10), show_shadow = true }}
-)
-
 local signal_colours = data.raw.lamp["small-lamp"].signal_to_color_mapping
 if not signal_colours then
     signal_colours = {
@@ -19,8 +12,9 @@ if not signal_colours then
         {type="virtual", name="signal-cyan", color={r=0,g=1,b=1}}
     }
 end
+-- electric large lamp
 
-local lamp = {
+data:extend({{
     name = DLL.name,  -- deadlock-large-lamp
     type = "lamp",
     circuit_connector = {
@@ -127,13 +121,10 @@ local lamp = {
         volume = 0.65
     },
     squeak_behaviour = false,
-}
-
-data:extend({lamp})
-
+}})
 -- copper lamp
 
-local lamp = {
+data:extend({{
     name = DLL.copper_name,  -- deadlock-copper-lamp
     type = "assembling-machine",
     minable = {
@@ -224,66 +215,102 @@ local lamp = {
         volume = 0.65
     },
     squeak_behaviour = false,
-}
-
-data:extend({lamp})
+}})
 
 -- floor lamp
 
-lamp = table.deepcopy(data.raw.lamp[DLL.name])
-
-lamp.name = DLL.floor_name  -- deadlock-floor-lamp
-lamp.minable = {
-    mining_time = 2.0,
-    result = DLL.floor_name  -- deadlock-floor-lamp
-}
-lamp.icon = string.format("%s/floor-lamp.png", DLL.icon_path)
-lamp.light.intensity = 0.4
-lamp.energy_usage_per_tick = "10kW"
-lamp.circuit_connector_sprites = nil
-lamp.circuit_wire_connection_point = nil
-lamp.circuit_wire_max_distance = nil
-lamp.picture_off = {
-    axially_symmetrical = false,
-    direction_count = 1,
-    filename = string.format("%s/blank.png", DLL.entity_path),
-    height = 1,
-    width = 1,
-    priority = "low",
-}
-lamp.integration_patch_layer = "floor-mechanics-under-corpse"
-lamp.integration_patch = {
-    axially_symmetrical = false,
-    direction_count = 1,
-    filename = string.format("%s/hr-floor-lamp-base.png", DLL.entity_path),
-    height = 128,
-    priority = "high",
-    scale = 0.5,
-    shift = {0,0},
-    width = 128
-}
-lamp.picture_on = {
-    axially_symmetrical = false,
-    direction_count = 1,
-    filename = string.format("%s/hr-floor-lamp-light.png", DLL.entity_path),
-    blend_mode = "additive-soft",
-    height = 128,
-    priority = "high",
-    scale = 0.5,
-    shift = {0,0},
-    tint = { r = 1.0, g = 1.0, b = 0.85 },
-    width = 128
-}
-
-data:extend({lamp})  -- Add the floor lamp definition
+data:extend({{
+    name = DLL.floor_name,  -- deadlock-floor-lamp
+    type = "lamp",
+    collision_box = { {-0.6,-0.6}, {0.6,0.6} },
+    selection_box = { {-1.0,-1.0}, {1.0,1.0} },
+    tile_width = 2,
+    tile_height = 2,
+    collision_mask = {layers = {object = true, water_tile = true, meltable = true}},
+    corpse = "small-remnants",
+    darkness_for_all_lamps_off = 0.3,
+    darkness_for_all_lamps_on = 0.5,
+    dying_explosion = "medium-explosion",
+    energy_source = {
+        type = "electric",
+        usage_priority = "lamp"
+    },
+    energy_usage_per_tick = "10kW",
+    fast_replaceable_group = "large-lamp",
+    flags = {"placeable-neutral","player-creation"},
+    glow_color_intensity = 1,
+    glow_size = 12,
+    glow_render_mode = "multiplicative",
+    icon = string.format("%s/floor-lamp.png", DLL.icon_path),
+    icon_size = 64,
+    icon_mipmaps = 4,
+    light = {
+        color = DLL.glow_colour,
+        intensity = 0.4,
+        size = 60,
+        type = "oriented",
+        picture = { filename = string.format("%s/light.png", DLL.entity_path), width = 256, height = 256, scale = 0.125 },
+    },
+    light_when_colored = {
+        color = DLL.glow_colour,
+        intensity = 0,
+        size = 12,
+    },
+    max_health = 150,
+    minable = {
+        mining_time = 2.0,
+        result = DLL.floor_name  -- deadlock-floor-lamp
+    },
+    mined_sound = {
+        filename = "__base__/sound/deconstruct-bricks.ogg"
+    },
+    picture_off = {
+            axially_symmetrical = false,
+        direction_count = 1,
+        filename = string.format("%s/blank.png", DLL.entity_path),
+        height = 1,
+        width = 1,
+        priority = "low"
+    },
+    picture_on = {
+        axially_symmetrical = false,
+        direction_count = 1,
+        filename = string.format("%s/hr-floor-lamp-light.png", DLL.entity_path),
+        blend_mode = "additive-soft",
+        height = 128,
+        priority = "high",
+        scale = 0.5,
+        shift = {0,0},
+        tint = { r = 1.0, g = 1.0, b = 0.85 },
+        width = 128
+    },
+    integration_patch_layer = "floor-mechanics-under-corpse",
+    integration_patch = {
+        axially_symmetrical = false,
+        direction_count = 1,
+        filename = string.format("%s/hr-floor-lamp-base.png", DLL.entity_path),
+        height = 128,
+        priority = "high",
+        scale = 0.5,
+        shift = {0,0},
+        width = 128
+    },
+    resistances = {
+        {
+            type = "fire",
+            percent = 50
+        },
+    },
+    signal_to_color_mapping = signal_colours,
+    vehicle_impact_sound = {
+        filename = "__base__/sound/car-metal-impact.ogg",
+        volume = 0.65
+    },
+    squeak_behaviour = false,
+}})
 
 -- Electric Copper Lamp (new entity)
-
-local DLL = require("prototypes.globals")
-local DLLFUNC = require("prototypes.functions")
-
--- Electric Copper Lamp (new entity)
-local lamp = {
+data:extend({{
     name = DLL.electric_copper_name,  -- Use the correct unique name for the electric copper lamp
     type = "lamp",  -- Type is lamp to behave like a regular lamp
     minable = {
@@ -369,6 +396,4 @@ local lamp = {
         volume = 0.65
     },
     squeak_behaviour = false,
-}
-
-data:extend({lamp})
+}})
