@@ -28,13 +28,13 @@ data:extend({
     -- Electric Copper Lamp Item
     {
         type = "item",
-        name = DLL.electric_copper_name,  
+        name = DLL.electric_copper_name,
         icon = string.format("%s/copper-lampelect.png", DLL.icon_path),
         icon_size = 64,
         icon_mipmaps = 4,
         subgroup = "circuit-network",  -- Electric copper lamp under circuit-network
         order = "a[lamp]-c[electric-copper-lamp]",  -- Electric copper lamp after copper lamp
-        place_result = DLL.electric_copper_name,  
+        place_result = DLL.electric_copper_name,
         stack_size = 50
     },
     -- Floor Lamp Item
