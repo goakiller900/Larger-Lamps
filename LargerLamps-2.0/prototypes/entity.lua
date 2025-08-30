@@ -156,7 +156,7 @@ data:extend({{
         },
         render_no_power_icon = false,
     },
-    energy_usage = "9.6kW",
+    energy_usage = "10kW", -- assembling-machine requires energy_usage
     max_health = 100,
     resistances = {
         {
@@ -221,11 +221,11 @@ data:extend({{
 data:extend({{
     name = DLL.floor_name,  -- deadlock-floor-lamp
     type = "lamp",
-    collision_box = { {-0.6,-0.6}, {0.6,0.6} },
+    collision_box = {{0, 0}, {0, 0}},
     selection_box = { {-1.0,-1.0}, {1.0,1.0} },
     tile_width = 2,
     tile_height = 2,
-    collision_mask = {layers = {object = true, water_tile = true, meltable = true}},
+    collision_mask = { layers = {} },
     corpse = "small-remnants",
     darkness_for_all_lamps_off = 0.3,
     darkness_for_all_lamps_on = 0.5,
