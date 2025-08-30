@@ -2,7 +2,7 @@
 Version: 0.2.2
 Date: 11-08-2025
   Bugfixes:
-    - Fixed a bug where Floor Lamp had collision with the player when it should not have.
+    - Fixed a bug where Floor Lamp used an invalid collision mask; now uses empty collision mask to avoid collisions and load errors.
     - Restored energy_usage field for deadlock-copper-lamp to satisfy assembling-machine requirements.
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.1

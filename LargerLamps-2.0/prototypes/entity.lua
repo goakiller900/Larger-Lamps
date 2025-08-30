@@ -225,7 +225,7 @@ data:extend({{
     selection_box = { {-1.0,-1.0}, {1.0,1.0} },
     tile_width = 2,
     tile_height = 2,
-    collision_mask = {},
+    collision_mask = { layers = {} },
     corpse = "small-remnants",
     darkness_for_all_lamps_off = 0.3,
     darkness_for_all_lamps_on = 0.5,
