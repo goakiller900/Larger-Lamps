@@ -1,6 +1,10 @@
 local DLL = require("prototypes.globals")
 local DLLFUNC = require("prototypes.functions")
 
+-- TUNABLE: mining speed for ALL lamps/entities in this file
+-- (Most buildings feel around 0.1–0.5. 0.3 is a good “snappy but not instant”.)
+local LAMP_MINING_TIME = 0.3
+
 local signal_colours = data.raw.lamp["small-lamp"].signal_to_color_mapping
 if not signal_colours then
     signal_colours = {
@@ -12,8 +16,8 @@ if not signal_colours then
         {type="virtual", name="signal-cyan", color={r=0,g=1,b=1}}
     }
 end
--- electric large lamp
 
+-- electric large lamp
 data:extend({{
     name = DLL.name,  -- deadlock-large-lamp
     type = "lamp",
@@ -34,7 +38,7 @@ data:extend({{
     selection_box = { {-1.0,-1.0}, {1.0,1.0} },
     tile_width = 2,
     tile_height = 2,
-    collision_mask = {layers = {object = true, water_tile = true, meltable = true,player=true}},
+    collision_mask = {layers = {object = true, water_tile = true, meltable = true, player = true}},
     corpse = "small-remnants",
     darkness_for_all_lamps_off = 0.3,
     darkness_for_all_lamps_on = 0.5,
@@ -66,7 +70,7 @@ data:extend({{
     },
     max_health = 150,
     minable = {
-        mining_time = 2.0,
+        mining_time = LAMP_MINING_TIME, -- CHANGED (was 2.0)
         result = DLL.name,  -- deadlock-large-lamp
     },
     mined_sound = {
@@ -110,10 +114,7 @@ data:extend({{
         width = 128
     },
     resistances = {
-        {
-            type = "fire",
-            percent = 50
-        },
+        { type = "fire", percent = 50 },
     },
     signal_to_color_mapping = signal_colours,
     vehicle_impact_sound = {
@@ -122,21 +123,21 @@ data:extend({{
     },
     squeak_behaviour = false,
 }})
--- copper lamp
 
+-- copper lamp (burner assembling-machine)
 data:extend({{
     name = DLL.copper_name,  -- deadlock-copper-lamp
     type = "assembling-machine",
     minable = {
-        mining_time = 2.0,
+        mining_time = LAMP_MINING_TIME, -- CHANGED (was 2.0)
         result = DLL.copper_name,  -- deadlock-copper-lamp
     },
     icon = string.format("%s/copper-lamp.png", DLL.icon_path),
     icon_size = 64,
     icon_mipmaps = 4,
     fast_replaceable_group = "large-lamp",
-    next_upgrade = DLL.copper_name,  -- deadlock-large-lamp
-    collision_mask = {layers = {object = true, water_tile = true, meltable = true,player=true}},
+    next_upgrade = DLL.copper_name,  -- left as your original value
+    collision_mask = {layers = {object = true, water_tile = true, meltable = true, player = true}},
     crafting_speed = 1,
     crafting_categories = {"lamp-burning"},
     fixed_recipe = DLL.copper_name.."-burning",
@@ -159,11 +160,8 @@ data:extend({{
     energy_usage = "10kW", -- assembling-machine requires energy_usage
     max_health = 100,
     resistances = {
-        {
-            type = "fire",
-            percent = 95
-        },
-     },
+        { type = "fire", percent = 95 },
+    },
     corpse = "small-remnants",
     flags = {"placeable-player", "placeable-neutral", "player-creation"},
     collision_box = { {-0.6,-0.6}, {0.6,0.6} },
@@ -183,11 +181,11 @@ data:extend({{
                     intensity = 0.75,
                     size = 60,
                     type = "oriented",
-                    picture = { 
+                    picture = {
                         filename = string.format("%s/light.png", DLL.entity_path),
                         width = 256,
                         height = 256,
-                        scale = 0.125 
+                        scale = 0.125
                     },
                 },
             }
@@ -221,11 +219,19 @@ data:extend({{
 data:extend({{
     name = DLL.floor_name,  -- deadlock-floor-lamp
     type = "lamp",
-    collision_box = {{0, 0}, {0, 0}},
+
+    -- Build-space collision ONLY (prevents stacking/building on top),
+    -- but does NOT collide with player/vehicles.
+    collision_box = { {-0.6,-0.6}, {0.6,0.6} },
+    collision_mask = {layers = {
+        item = true,
+        water_tile = true,
+        meltable = true
+    }},
+
     selection_box = { {-1.0,-1.0}, {1.0,1.0} },
     tile_width = 2,
     tile_height = 2,
-    collision_mask = { layers = {} },
     corpse = "small-remnants",
     darkness_for_all_lamps_off = 0.3,
     darkness_for_all_lamps_on = 0.5,
@@ -257,14 +263,14 @@ data:extend({{
     },
     max_health = 150,
     minable = {
-        mining_time = 2.0,
+        mining_time = LAMP_MINING_TIME, -- CHANGED (was 2.0)
         result = DLL.floor_name  -- deadlock-floor-lamp
     },
     mined_sound = {
         filename = "__base__/sound/deconstruct-bricks.ogg"
     },
     picture_off = {
-            axially_symmetrical = false,
+        axially_symmetrical = false,
         direction_count = 1,
         filename = string.format("%s/blank.png", DLL.entity_path),
         height = 1,
@@ -295,10 +301,7 @@ data:extend({{
         width = 128
     },
     resistances = {
-        {
-            type = "fire",
-            percent = 50
-        },
+        { type = "fire", percent = 50 },
     },
     signal_to_color_mapping = signal_colours,
     vehicle_impact_sound = {
@@ -310,11 +313,11 @@ data:extend({{
 
 -- Electric Copper Lamp (new entity)
 data:extend({{
-    name = DLL.electric_copper_name,  -- Use the correct unique name for the electric copper lamp
-    type = "lamp",  -- Type is lamp to behave like a regular lamp
+    name = DLL.electric_copper_name,
+    type = "lamp",
     minable = {
-        mining_time = 2.0,
-        result = DLL.electric_copper_name  -- Adjust this to the appropriate item name
+        mining_time = LAMP_MINING_TIME, -- CHANGED (was 2.0)
+        result = DLL.electric_copper_name
     },
     circuit_connector = {
         points = {
@@ -333,19 +336,19 @@ data:extend({{
     selection_box = { {-1.0, -1.0}, {1.0, 1.0} },
     tile_width = 2,
     tile_height = 2,
-    collision_mask = {layers = {object = true, water_tile = true, meltable = true,player=true}},
+    collision_mask = {layers = {object = true, water_tile = true, meltable = true, player = true}},
     corpse = "small-remnants",
     dying_explosion = "medium-explosion",
     energy_source = {
         type = "electric",
         usage_priority = "lamp",
     },
-    energy_usage_per_tick = "20kW",  -- Set power usage for electric lamp
+    energy_usage_per_tick = "20kW",
     flags = {"placeable-neutral", "player-creation"},
     glow_color_intensity = 1,
     glow_size = 12,
     glow_render_mode = "multiplicative",
-    icon = string.format("%s/copper-lamp.png", DLL.icon_path),  -- New icon for electric copper lamp
+    icon = string.format("%s/copper-lamp.png", DLL.icon_path),
     icon_size = 64,
     icon_mipmaps = 4,
     light = {
@@ -355,12 +358,17 @@ data:extend({{
         type = "oriented",
         picture = { filename = string.format("%s/light.png", DLL.entity_path), width = 256, height = 256, scale = 0.125 },
     },
+    light_when_colored = {
+        color = DLL.glow_colour,
+        intensity = 0,
+        size = 12,
+    },
     picture_off = {
         layers = {
             {
                 axially_symmetrical = false,
                 direction_count = 1,
-                filename = string.format("%s/hr-copper-lamp-electric-base.png", DLL.entity_path),  -- Electric lamp base graphics
+                filename = string.format("%s/hr-copper-lamp-electric-base.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -371,7 +379,7 @@ data:extend({{
                 axially_symmetrical = false,
                 direction_count = 1,
                 draw_as_shadow = true,
-                filename = string.format("%s/hr-copper-lamp-electric-shadow.png", DLL.entity_path),  -- Electric lamp shadow graphics
+                filename = string.format("%s/hr-copper-lamp-electric-shadow.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -383,7 +391,7 @@ data:extend({{
     picture_on = {
         axially_symmetrical = false,
         direction_count = 1,
-        filename = string.format("%s/hr-copper-lamp-electric-light.png", DLL.entity_path),  -- Electric lamp light graphics
+        filename = string.format("%s/hr-copper-lamp-electric-light.png", DLL.entity_path),
         blend_mode = "additive-soft",
         height = 128,
         priority = "high",
@@ -393,11 +401,9 @@ data:extend({{
         width = 128
     },
     resistances = {
-        {
-            type = "fire",
-            percent = 50
-        },
+        { type = "fire", percent = 50 },
     },
+    signal_to_color_mapping = signal_colours,
     vehicle_impact_sound = {
         filename = "__base__/sound/car-metal-impact.ogg",
         volume = 0.65
