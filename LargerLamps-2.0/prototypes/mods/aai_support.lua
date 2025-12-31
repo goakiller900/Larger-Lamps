@@ -1,7 +1,7 @@
 local DLL = require("prototypes.globals")
 
 -- Check if AAI Industrial mod is present
-if mods["aai-industries"] then
+if mods["aai-industry"] then
     -- Modify Large Lamp Recipe for AAI
     if data.raw["recipe"][DLL.name] then
         data.raw["recipe"][DLL.name].category = "aai-production" -- Use AAI production category for compatibility
@@ -67,3 +67,4 @@ else
         data.raw["recipe"][DLL.floor_name].category = "basic-crafting"
     end
 end
+
