@@ -39,11 +39,40 @@ function DLLFUNC.shift_calc(x,y,tw,th,w,h)
 	return {((tw/2) - (x + (w/2)))/64, ((th/2) - (y + (h/2)))/64}
 end
 
-function DLLFUNC.get_layer(filename, frame_count, line_length, shadow, repeat_count, animation_speed, width, height, x, y, tw, th, shift, blend_mode, flags, tint, direction_count, apply_runtime_tint, run_mode)
-	local shift = DLLFUNC.offset(shift, DLLFUNC.shift_calc(x,y,tw,th,width,height))
-	local layer = DLLFUNC.get_sprite_def("lr-"..filename, frame_count, line_length, shadow, repeat_count, animation_speed, width/2, height/2, x, y, 1, shift, blend_mode, flags, tint, direction_count, apply_runtime_tint, run_mode)
-	layer.hr_version = DLLFUNC.get_sprite_def("hr-"..filename, frame_count, line_length, shadow, repeat_count, animation_speed, width, height, x, y, 0.5, shift, blend_mode, flags, tint, direction_count, apply_runtime_tint, run_mode)
-	return layer
+function DLLFUNC.get_layer(filename, frame_count, line_length, shadow,
+                           repeat_count, animation_speed,
+                           width, height, x, y, tw, th,
+                           shift, blend_mode, flags, tint,
+                           direction_count, apply_runtime_tint, run_mode,
+                           sprite_size)
+
+  local real_shift = DLLFUNC.offset(
+    shift,
+    DLLFUNC.shift_calc(x, y, tw, th, width, height)
+  )
+
+  local layer = DLLFUNC.get_sprite_def(
+    filename,
+    frame_count,
+    line_length,
+    shadow,
+    repeat_count,
+    animation_speed,
+    width,
+    height,
+    x,
+    y,
+    sprite_size or 1,          -- <<< TO JEST SCALE
+    real_shift,
+    blend_mode or "normal",
+    flags,
+    tint,
+    direction_count,
+    apply_runtime_tint,
+    run_mode
+  )
+
+  return layer
 end
 
 return DLLFUNC
