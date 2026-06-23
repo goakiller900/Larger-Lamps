@@ -4,9 +4,9 @@ data:extend({
     {
         name = DLL.electric_copper_name,
         type = "recipe",
-        enabled = true,
+        enabled = false,
         ingredients = {
-            { type = "item", name = "advanced-circuit", amount = 2 },
+            { type = "item", name = "electronic-circuit", amount = 2 },
             { type = "item", name = "copper-cable", amount = 4 },
             { type = "item", name = "iron-plate", amount = 6 },
         },
