@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.6
+Date: 23-06-2026
+  Bugfixes:
+    - Fixed Electric Copper Lamp being craftable before lighting research.
+    - Replaced the Electric Copper Lamp recipe's advanced circuits with electronic circuits so the recipe fits the lighting research tier.
+  Notes:
+    - Fix based on the report and suggestion by odnols.
+    - Update prepared with ChatGPT/Codex assistance because I was too lazy to do the manual cleanup myself.
+    - Thanks to the other authors and contributors for the fixes, ideas, and continued improvements.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.5
 Date: 23-06-2026
   Changes:
