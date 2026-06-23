@@ -15,6 +15,6 @@ data:extend({
         },
         subgroup = "circuit-network",  -- All lamps under circuit-network
         order = "a[lamp]-a[large-lamp]",  -- Place it first in the list
-        category = "crafting"  -- Category for crafting
+        categories = { "crafting" }  -- Categories for crafting
     }
 })

@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+Date: 23-06-2026
+  Bugfixes:
+    - Updated recipe prototypes for Factorio 2.1 by replacing `category` with the new `categories` table.
+    - Updated AAI Industrial recipe category overrides to use the new `categories` table.
+  Changes:
+    - Updated mod metadata for Factorio 2.1 compatibility.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.3
 Date: 31-12-2025
   Bugfixes:

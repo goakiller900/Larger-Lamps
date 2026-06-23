@@ -15,6 +15,6 @@ data:extend({
         },
         subgroup = "circuit-network",  -- Electric copper lamp under circuit-network
         order = "a[lamp]-c[electric-copper-lamp]",  -- Place after copper lamp
-        category = "crafting"  -- Category for crafting
+        categories = { "crafting" }  -- Categories for crafting
     }
 })
