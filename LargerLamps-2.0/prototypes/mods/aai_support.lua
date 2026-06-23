@@ -4,7 +4,7 @@ local DLL = require("prototypes.globals")
 if mods["aai-industry"] then
     -- Modify Large Lamp Recipe for AAI
     if data.raw["recipe"][DLL.name] then
-        data.raw["recipe"][DLL.name].category = "aai-production" -- Use AAI production category for compatibility
+        data.raw["recipe"][DLL.name].categories = { "aai-production" } -- Use AAI production category for compatibility
         data.raw["recipe"][DLL.name].ingredients = {
             { type = "item", name = "copper-plate", amount = 6 },
             { type = "item", name = "glass", amount = 4 }, -- Increased to reflect AAI's reliance on glass
@@ -15,7 +15,7 @@ if mods["aai-industry"] then
 
     -- Modify Copper Lamp Recipe for AAI
     if data.raw["recipe"][DLL.copper_name] then
-        data.raw["recipe"][DLL.copper_name].category = "aai-production"
+        data.raw["recipe"][DLL.copper_name].categories = { "aai-production" }
         data.raw["recipe"][DLL.copper_name].ingredients = {
             { type = "item", name = "copper-plate", amount = 10 }, -- Increased to emphasize copper usage
             { type = "item", name = "glass", amount = 3 },
@@ -26,7 +26,7 @@ if mods["aai-industry"] then
 
     -- Modify Electric Copper Lamp Recipe for AAI
     if data.raw["recipe"][DLL.electric_copper_name] then
-        data.raw["recipe"][DLL.electric_copper_name].category = "aai-production"
+        data.raw["recipe"][DLL.electric_copper_name].categories = { "aai-production" }
         data.raw["recipe"][DLL.electric_copper_name].ingredients = {
             { type = "item", name = "copper-plate", amount = 12 },
             { type = "item", name = "glass", amount = 6 },
@@ -38,7 +38,7 @@ if mods["aai-industry"] then
 
     -- Modify Floor Lamp Recipe for AAI
     if data.raw["recipe"][DLL.floor_name] then
-        data.raw["recipe"][DLL.floor_name].category = "aai-production"
+        data.raw["recipe"][DLL.floor_name].categories = { "aai-production" }
         data.raw["recipe"][DLL.floor_name].ingredients = {
             { type = "item", name = "electronic-circuit", amount = 2 },
             { type = "item", name = "copper-cable", amount = 8 },
@@ -55,16 +55,16 @@ if mods["aai-industry"] then
 else
     -- Fallback for vanilla compatibility
     if data.raw["recipe"][DLL.name] then
-        data.raw["recipe"][DLL.name].category = "basic-crafting"
+        data.raw["recipe"][DLL.name].categories = { "basic-crafting" }
     end
     if data.raw["recipe"][DLL.copper_name] then
-        data.raw["recipe"][DLL.copper_name].category = "basic-crafting"
+        data.raw["recipe"][DLL.copper_name].categories = { "basic-crafting" }
     end
     if data.raw["recipe"][DLL.electric_copper_name] then
-        data.raw["recipe"][DLL.electric_copper_name].category = "basic-crafting"
+        data.raw["recipe"][DLL.electric_copper_name].categories = { "basic-crafting" }
     end
     if data.raw["recipe"][DLL.floor_name] then
-        data.raw["recipe"][DLL.floor_name].category = "basic-crafting"
+        data.raw["recipe"][DLL.floor_name].categories = { "basic-crafting" }
     end
 end
 
