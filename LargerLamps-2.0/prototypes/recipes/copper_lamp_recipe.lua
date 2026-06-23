@@ -14,7 +14,7 @@ data:extend({
         },
         subgroup = "circuit-network",  -- Copper lamp under circuit-network
         order = "a[lamp]-b[copper-lamp]",  -- Place after large lamp
-        category = "crafting"  -- Category for crafting
+        categories = { "crafting" }  -- Categories for crafting
     },
     -- Define the hidden burning recipe for the copper lamp
     {
@@ -26,7 +26,7 @@ data:extend({
         icon = string.format("%s/copper-lamp.png", DLL.icon_path),  -- Icon path for the recipe
         icon_size = 64,
         icon_mipmaps = 4,
-        category = "lamp-burning",  -- Custom category for lamp burning
+        categories = { "lamp-burning" },  -- Custom category for lamp burning
         ingredients = {},
         results = {},
         subgroup = "other",  -- Optional: Adjust this if needed
