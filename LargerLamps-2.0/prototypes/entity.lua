@@ -81,7 +81,7 @@ data:extend({{
             {
                 axially_symmetrical = false,
                 direction_count = 1,
-                filename = string.format("%s/hr-large-lamp-base.png", DLL.entity_path),
+                filename = string.format("%s/large-lamp-base.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -92,7 +92,7 @@ data:extend({{
                 axially_symmetrical = false,
                 direction_count = 1,
                 draw_as_shadow = true,
-                filename = string.format("%s/hr-large-lamp-shadow.png", DLL.entity_path),
+                filename = string.format("%s/large-lamp-shadow.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -104,7 +104,7 @@ data:extend({{
     picture_on = {
         axially_symmetrical = false,
         direction_count = 1,
-        filename = string.format("%s/hr-large-lamp-light.png", DLL.entity_path),
+        filename = string.format("%s/large-lamp-light.png", DLL.entity_path),
         blend_mode = "additive-soft",
         height = 128,
         priority = "high",
@@ -166,31 +166,62 @@ data:extend({{
     flags = {"placeable-player", "placeable-neutral", "player-creation"},
     collision_box = { {-0.6,-0.6}, {0.6,0.6} },
     selection_box = { {-1.0,-1.0}, {1.0,1.0} },
-    graphics_set = {
-        animation = {
-            layers = {
-                DLLFUNC.get_layer("copper-lamp-base", nil, nil, nil, nil, nil, 128, 128, 0, 0, 128, 128, {0, 0}),
-                DLLFUNC.get_layer("copper-lamp-shadow", nil, nil, "shadow", nil, nil, 128, 128, 0, 0, 128, 128, {0, 0}),
-            }
-        },
-        working_visualisations = {
-            {
-                animation = DLLFUNC.get_layer("copper-lamp-working", 30, 6, "glow", nil, 1, 128, 128, 0, 0, 128, 128, {0, 0}, "additive-soft"),
-                light = {
-                    color = {1.0, 0.75, 0.5},
-                    intensity = 0.75,
-                    size = 60,
-                    type = "oriented",
-                    picture = {
-                        filename = string.format("%s/light.png", DLL.entity_path),
-                        width = 256,
-                        height = 256,
-                        scale = 0.125
-                    },
-                },
-            }
+	graphics_set = {
+    animation = {
+        layers = {
+            DLLFUNC.get_layer(
+                "copper-lamp-base",
+                nil, nil, nil, nil, nil,
+                128, 128,        -- width, height (bez zmian)
+                0, 0,
+                128, 128,        -- tw, th MUSI być takie samo
+                {0, 0},
+                nil, nil, nil,
+                nil, nil, nil,
+                0.5              -- <<< SKALA
+            ),
+            DLLFUNC.get_layer(
+                "copper-lamp-shadow",
+                nil, nil, "shadow", nil, nil,
+                128, 128,
+                0, 0,
+                128, 128,
+                {0, 0},
+                nil, nil, nil,
+                nil, nil, nil,
+                0.5              -- <<< SKALA
+            ),
         }
     },
+    working_visualisations = {
+        {
+            animation = DLLFUNC.get_layer(
+                "copper-lamp-working",
+                30, 6, "glow", nil, 1,
+                128, 128,
+                0, 0,
+                128, 128,
+                {0, 0},
+                "additive-soft",
+                nil, nil,
+                nil, nil, nil,
+                0.5              -- <<< SKALA
+            ),
+            light = {
+                color = {1.0, 0.75, 0.5},
+                intensity = 0.75,
+                size = 60,
+                type = "oriented",
+                picture = {
+                    filename = string.format("%s/light.png", DLL.entity_path),
+                    width = 256,
+                    height = 256,
+                    scale = 0.125
+                },
+            },
+        },
+    },
+},
     working_sound = {
         sound = {
             filename = "__base__/sound/furnace.ogg",
@@ -280,7 +311,7 @@ data:extend({{
     picture_on = {
         axially_symmetrical = false,
         direction_count = 1,
-        filename = string.format("%s/hr-floor-lamp-light.png", DLL.entity_path),
+        filename = string.format("%s/floor-lamp-light.png", DLL.entity_path),
         blend_mode = "additive-soft",
         height = 128,
         priority = "high",
@@ -293,7 +324,7 @@ data:extend({{
     integration_patch = {
         axially_symmetrical = false,
         direction_count = 1,
-        filename = string.format("%s/hr-floor-lamp-base.png", DLL.entity_path),
+        filename = string.format("%s/floor-lamp-base.png", DLL.entity_path),
         height = 128,
         priority = "high",
         scale = 0.5,
@@ -368,7 +399,7 @@ data:extend({{
             {
                 axially_symmetrical = false,
                 direction_count = 1,
-                filename = string.format("%s/hr-copper-lamp-electric-base.png", DLL.entity_path),
+                filename = string.format("%s/copper-lamp-base.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -379,7 +410,7 @@ data:extend({{
                 axially_symmetrical = false,
                 direction_count = 1,
                 draw_as_shadow = true,
-                filename = string.format("%s/hr-copper-lamp-electric-shadow.png", DLL.entity_path),
+                filename = string.format("%s/copper-lamp-electric-shadow.png", DLL.entity_path),
                 height = 128,
                 priority = "high",
                 scale = 0.5,
@@ -391,7 +422,7 @@ data:extend({{
     picture_on = {
         axially_symmetrical = false,
         direction_count = 1,
-        filename = string.format("%s/hr-copper-lamp-electric-light.png", DLL.entity_path),
+        filename = string.format("%s/copper-lamp-working.png", DLL.entity_path),
         blend_mode = "additive-soft",
         height = 128,
         priority = "high",
