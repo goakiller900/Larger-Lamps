@@ -12,7 +12,7 @@ Date: 11-07-2026
     - Added an optional AAI Industry dependency for deterministic data-stage load order.
     - Made lighting technology recipe unlocks defensive and idempotent.
     - Synced circuit colour signals from the current vanilla lamp prototype for both circuit-compatible lamps.
-    - Completed English and Russian item, entity and recipe localization without overriding the vanilla Small Lamp.
+    - Completed item, entity, recipe and description localization for English, Russian, Dutch, German, French, Spanish, Brazilian Portuguese, Polish, Simplified Chinese, Japanese, Korean and Turkish.
     - Added deterministic GitHub release packaging and optional Factorio Mod Portal publishing.
   Notes:
     - No lamp graphics, light radius, energy use or recipe balance was changed for vanilla Factorio.
