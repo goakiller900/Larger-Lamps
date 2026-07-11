@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - main
+      - "**"
   workflow_dispatch:
     inputs:
       publish_factorio_portal:
@@ -38,12 +38,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Read mod metadata
+      - name: Read mod and branch metadata
         id: metadata
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import json
+          import os
+          import re
           from pathlib import Path
 
           info = json.loads(
@@ -54,19 +56,57 @@ jobs:
           title = info["title"]
           archive = f"{name}_{version}.zip"
 
+          ref_name = os.environ["GITHUB_REF_NAME"]
+          branch_slug = re.sub(r"[^A-Za-z0-9._-]+", "-", ref_name).strip("-")
+          branch_slug = branch_slug[:80] or "branch"
+          short_sha = os.environ["GITHUB_SHA"][:7]
+
           print(f"name={name}")
           print(f"version={version}")
           print(f"title={title}")
           print(f"tag=v{version}")
           print(f"archive={archive}")
           print(f"checksum={archive}.sha256")
+          print(f"branch_name={ref_name}")
+          print(f"branch_slug={branch_slug}")
+          print(f"branch_tag=branch-{branch_slug}")
+          print(f"short_sha={short_sha}")
           PY
 
       - name: Validate and build release archive
         run: python scripts/build_release.py
 
+      - name: Create or update branch prerelease
+        if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MOD_TITLE: ${{ steps.metadata.outputs.title }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch_name }}
+          BRANCH_TAG: ${{ steps.metadata.outputs.branch_tag }}
+          SHORT_SHA: ${{ steps.metadata.outputs.short_sha }}
+          ARCHIVE: dist/${{ steps.metadata.outputs.archive }}
+          CHECKSUM: dist/${{ steps.metadata.outputs.checksum }}
+        run: |
+          set -euo pipefail
+
+          # Each branch has one moving prerelease. A new branch commit replaces the
+          # previous prerelease instead of filling the Releases page with snapshots.
+          if gh release view "$BRANCH_TAG" >/dev/null 2>&1; then
+            gh release delete "$BRANCH_TAG" --yes --cleanup-tag
+          elif git ls-remote --exit-code --tags origin "refs/tags/$BRANCH_TAG" >/dev/null 2>&1; then
+            git push origin ":refs/tags/$BRANCH_TAG"
+          fi
+
+          gh release create "$BRANCH_TAG" "$ARCHIVE" "$CHECKSUM" \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "$MOD_TITLE $VERSION — $BRANCH_NAME ($SHORT_SHA)" \
+            --notes "Automatic test build from branch \`$BRANCH_NAME\` at commit \`$GITHUB_SHA\`. This is not a stable Mod Portal release."
+
       - name: Create or prepare immutable GitHub release
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -126,7 +166,7 @@ jobs:
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.metadata.outputs.name }}_${{ steps.metadata.outputs.version }}
+          name: ${{ steps.metadata.outputs.name }}_${{ steps.metadata.outputs.version }}_${{ steps.metadata.outputs.branch_slug }}_${{ steps.metadata.outputs.short_sha }}
           path: |
             dist/${{ steps.metadata.outputs.archive }}
             dist/${{ steps.metadata.outputs.checksum }}
@@ -135,14 +175,14 @@ jobs:
           retention-days: 30
 
       - name: Require API key for manual portal publication
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_factorio_portal && env.FACTORIO_API_KEY == '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_factorio_portal && env.FACTORIO_API_KEY == '' }}
         shell: bash
         run: |
           echo "::error title=Missing FACTORIO_API_KEY::Add the Factorio Mod Portal API key as a GitHub Actions repository secret named FACTORIO_API_KEY."
           exit 1
 
       - name: Publish to Factorio Mod Portal
-        if: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.publish_factorio_portal)) && env.FACTORIO_API_KEY != '' }}
+        if: ${{ github.ref == 'refs/heads/main' && ((github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && inputs.publish_factorio_portal)) && env.FACTORIO_API_KEY != '' }}
         shell: bash
         env:
           MOD_NAME: ${{ steps.metadata.outputs.name }}
