@@ -17,6 +17,23 @@ Community-maintained continuation of Deadlock's Larger Lamps for Factorio 2.1.
 
 AAI compatibility changes recipe ingredients while keeping standard Factorio crafting categories. The compatibility layer does not patch or depend on specific AAI machine prototype names.
 
+## Languages
+
+Larger Lamps includes complete item, entity, recipe and description localization for:
+
+- English
+- Russian
+- Dutch
+- German
+- French
+- Spanish
+- Brazilian Portuguese
+- Polish
+- Simplified Chinese
+- Japanese
+- Korean
+- Turkish
+
 ## Source layout
 
 The playable mod source is stored in [`LargerLamps-2.0/`](LargerLamps-2.0/). Release archives are generated from that directory and use the internal mod name and version from `info.json`.
