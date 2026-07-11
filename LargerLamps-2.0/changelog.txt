@@ -1,4 +1,22 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.7
+Date: 11-07-2026
+  Bugfixes:
+    - Reworked AAI Industry compatibility to use supported standard crafting categories instead of guessed machine prototypes and a private recipe category.
+    - Kept the burner Copper Lamp available from the start when AAI Industry is enabled.
+    - Removed the obsolete runtime configuration handler and added a targeted migration for existing saves.
+    - Fixed the Electric Copper Lamp entity icon to match its inventory item.
+    - Removed the Copper Lamp's self-referencing upgrade target.
+    - Consolidated the `lamp-burning` recipe category into a single declaration.
+  Changes:
+    - Added an optional AAI Industry dependency for deterministic data-stage load order.
+    - Made lighting technology recipe unlocks defensive and idempotent.
+    - Synced circuit colour signals from the current vanilla lamp prototype for both circuit-compatible lamps.
+    - Completed item, entity, recipe and description localization for English, Russian, Dutch, German, French, Spanish, Brazilian Portuguese, Polish, Simplified Chinese, Japanese, Korean and Turkish.
+    - Added deterministic GitHub release packaging and optional Factorio Mod Portal publishing.
+  Notes:
+    - No lamp graphics, light radius, energy use or recipe balance was changed for vanilla Factorio.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.6
 Date: 23-06-2026
   Bugfixes:
