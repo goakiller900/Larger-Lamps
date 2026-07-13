@@ -1,4 +1,4 @@
-# Larger Lamps 2.1
+# Larger Lamps
 
 Community-maintained continuation of Deadlock's Larger Lamps for Factorio 2.1.
 
