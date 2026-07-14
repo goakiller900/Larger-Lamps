@@ -207,7 +207,12 @@ def set_output(name: str, value: str) -> None:
 def create_issue(
     *, current_line: str, target_line: str, full_version: str, mod_version: str
 ) -> dict[str, Any]:
-    marker = f"<!-- factorio-version-watch:{target_line} -->"
+    mode = "simulation" if FORCE_TARGET_VERSION else "release"
+    marker = (
+        f"<!-- factorio-version-watch:{target_line} -->\n"
+        f"<!-- factorio-version-watch-key:{target_line}:{mode} -->"
+    )
+    title_prefix = "[Simulation] " if FORCE_TARGET_VERSION else ""
     body = f"""{marker}
 ## A new Factorio compatibility line was detected
 
@@ -237,7 +242,7 @@ The AI workflow cannot merge a pull request or publish to the Factorio Mod Porta
         f"/repos/{GITHUB_REPOSITORY}/issues",
         method="POST",
         payload={
-            "title": f"Factorio {target_line} compatibility review",
+            "title": f"{title_prefix}Factorio {target_line} compatibility review",
             "body": body,
             "labels": ["factorio-update", "needs-ai-review"],
         },
@@ -263,7 +268,8 @@ def main() -> int:
         return 0
 
     ensure_labels()
-    marker = f"<!-- factorio-version-watch:{target_line} -->"
+    mode = "simulation" if FORCE_TARGET_VERSION else "release"
+    marker = f"<!-- factorio-version-watch-key:{target_line}:{mode} -->"
     existing = find_existing_issue(marker)
     if existing is not None:
         print(f"Issue already exists: {existing.get('html_url')}")
