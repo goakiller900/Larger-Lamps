@@ -39,7 +39,7 @@ Location in GitHub:
 
 ## Optional repository variable
 
-- `OPENAI_MODEL` — model used by the Responses API. The default is `gpt-5-mini`.
+- `OPENAI_MODEL` — model used by the Responses API. The default is `gpt-5.6-sol`.
 
 ## Recommended first test
 
