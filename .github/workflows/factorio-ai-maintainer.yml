@@ -40,6 +40,7 @@ jobs:
 
       - name: Prepare AI compatibility attempt
         env:
+          GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}
           DEFAULT_BRANCH: main
