@@ -8,7 +8,7 @@ This repository contains two guarded GitHub Actions workflows.
 
 When Factorio moves from a line such as `2.1` to `2.2`, the workflow creates one issue titled **Factorio 2.2 compatibility review**. It will not create duplicate issues for the same compatibility line.
 
-The workflow can also be run manually. The optional `target_version` input makes it possible to simulate a future version while testing the automation.
+The workflow can also be run manually. The optional `target_version` input creates a clearly marked simulation issue. Simulation issues use a separate internal marker, so they can never suppress a real alert for the same Factorio version later.
 
 ## 2. Optional AI compatibility attempt
 
