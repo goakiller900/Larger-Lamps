@@ -1,0 +1,49 @@
+name: Factorio AI compatibility attempt
+
+on:
+  issues:
+    types:
+      - labeled
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Existing Factorio compatibility issue number
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: factorio-ai-maintainer-${{ github.event.issue.number || inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  prepare-draft-pr:
+    name: Prepare guarded draft PR
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.label.name == 'ai-fix-approved' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the default branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare AI compatibility attempt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          DEFAULT_BRANCH: main
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5.6-sol' }}
+        run: python scripts/factorio_ai_maintainer.py

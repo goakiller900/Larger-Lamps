@@ -1,0 +1,60 @@
+name: Factorio compatibility watch
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      target_version:
+        description: Optional Factorio version to simulate or force, for example 2.2.0
+        required: false
+        type: string
+      release_channel:
+        description: Factorio release channel to inspect
+        required: true
+        default: stable
+        type: choice
+        options:
+          - stable
+          - experimental
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: factorio-compatibility-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check Factorio compatibility line
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Factorio releases and create an issue when needed
+        id: watch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FACTORIO_RELEASE_CHANNEL: ${{ inputs.release_channel || 'stable' }}
+          FORCE_TARGET_VERSION: ${{ inputs.target_version }}
+        run: python scripts/factorio_version_watch.py
+
+      - name: Add job summary
+        shell: bash
+        run: |
+          if [[ "${{ steps.watch.outputs.created }}" == "true" ]]; then
+            echo "Created compatibility issue: ${{ steps.watch.outputs.issue_url }}" >> "$GITHUB_STEP_SUMMARY"
+          elif [[ -n "${{ steps.watch.outputs.issue_url }}" ]]; then
+            echo "Compatibility issue already exists: ${{ steps.watch.outputs.issue_url }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No new Factorio compatibility line was detected." >> "$GITHUB_STEP_SUMMARY"
+          fi
