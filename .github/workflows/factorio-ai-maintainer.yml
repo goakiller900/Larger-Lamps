@@ -45,5 +45,5 @@ jobs:
           ISSUE_NUMBER: ${{ inputs.issue_number }}
           DEFAULT_BRANCH: main
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5.6-sol' }}
         run: python scripts/factorio_ai_maintainer.py
